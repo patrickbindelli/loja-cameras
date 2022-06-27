@@ -1,6 +1,6 @@
 package br.edu.femass.controller;
 
-public enum Scenes {
+public enum ScenesEnum {
     ESTOQUE("estoque.fxml"),
     NOVA_VENDA("nova_venda.fxml"),
     NOVA_COMPRA("nova_compra.fxml"),
@@ -9,7 +9,7 @@ public enum Scenes {
     VENDAS("vendas.fxml"),
     ESTOQUE_POPUP("estoque_popup.fxml");
     private final String scene;
-    Scenes(String scene) {
+    ScenesEnum(String scene) {
         this.scene = scene;
     }
 

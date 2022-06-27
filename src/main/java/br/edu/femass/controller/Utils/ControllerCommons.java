@@ -11,16 +11,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Utils {
+public class ControllerCommons {
 
 
-    public static void switchToScene(ActionEvent event, Scenes scenes) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Utils.class.getResource(scenes.getScene())));
+    public static void switchToScene(ActionEvent event, ScenesEnum scenesEnum) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ControllerCommons.class.getResource(scenesEnum.getScene())));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(Utils.class.getResource("/br/edu/femass/style.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(ControllerCommons.class.getResource("/br/edu/femass/style.css")).toExternalForm());
 
-        String sceneTitle = scenes.toString().charAt(0) + scenes.toString().substring(1).toLowerCase();
+        String sceneTitle = scenesEnum.toString().charAt(0) + scenesEnum.toString().substring(1).toLowerCase();
         stage.setTitle(sceneTitle.replaceAll("_", " "));
         stage.setScene(scene);
         stage.show();
