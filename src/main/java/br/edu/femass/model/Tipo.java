@@ -1,7 +1,5 @@
 package br.edu.femass.model;
 
-import lombok.Data;
-
 public enum Tipo {
     SLR("SLR"),
     RANGEFINDER("Rangefinder"),
@@ -9,7 +7,7 @@ public enum Tipo {
     DESCARTAVEL("Descartável"),
     TLR("TLR");
 
-    private String nome;
+    private final String nome;
 
     Tipo(String nome) {
         this.nome = nome;

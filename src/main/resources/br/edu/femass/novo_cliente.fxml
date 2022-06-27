@@ -2,9 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,91 +10,63 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.femass.controller.NovoProdutoController">
+<BorderPane prefHeight="237.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.femass.controller.NovoClienteController">
    <center>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane prefHeight="239.0" prefWidth="392.0">
          <children>
-            <HBox layoutX="18.0" layoutY="101.0" prefHeight="400.0" prefWidth="600.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <VBox prefHeight="136.0" prefWidth="353.0" spacing="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <VBox prefHeight="400.0" prefWidth="612.0" spacing="20.0">
+                  <Label text="Cadastro de Cliente">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <VBox prefHeight="170.0" prefWidth="396.0" spacing="20.0">
                      <children>
-                        <Label text="Cadastro de Produto">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <VBox prefHeight="400.0" prefWidth="590.0" spacing="10.0">
+                        <HBox prefHeight="27.0" prefWidth="600.0" spacing="10.0">
                            <children>
-                              <HBox prefHeight="27.0" prefWidth="600.0" spacing="10.0">
+                              <VBox prefHeight="121.0" prefWidth="168.0" spacing="2.0">
                                  <children>
-                                    <VBox prefHeight="121.0" prefWidth="168.0" spacing="2.0">
-                                       <children>
-                                          <Label alignment="BOTTOM_LEFT" text="Nome" />
-                                          <TextField fx:id="txtNome" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="44.0" prefWidth="271.0" spacing="10.0">
-                                 <children>
-                                    <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
-                                       <children>
-                                          <Label text="Marca" />
-                                          <ComboBox fx:id="cbMarca" prefHeight="25.0" prefWidth="168.0" />
-                                       </children>
-                                    </VBox>
-                                    <Button fx:id="btnNovaMarca" mnemonicParsing="false" onAction="#btnNovaMarcaAction" prefHeight="25.0" prefWidth="87.0" text="Nova Marca" />
-                                    <Button mnemonicParsing="false" onAction="#btnDeletarMarcaAction" text="Deletar" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" prefHeight="100.0" prefWidth="200.0" scaleShape="false" spacing="10.0">
-                                 <children>
-                                    <VBox alignment="BOTTOM_LEFT" prefHeight="44.0" prefWidth="168.0" spacing="2.0">
-                                       <children>
-                                          <Label fx:id="lblNovaMarca" disable="true" text="Nome da Marca" />
-                                          <TextField fx:id="txtNomeMarca" disable="true" />
-                                       </children>
-                                    </VBox>
-                                    <Button fx:id="btnSalvarMarca" disable="true" mnemonicParsing="false" onAction="#btnSalvarMarcaAction" text="Salvar" />
-                                 </children>
-                              </HBox>
-                              <VBox prefHeight="28.0" prefWidth="168.0" spacing="2.0">
-                                 <children>
-                                    <Label text="Tipo" />
-                                    <ComboBox fx:id="cbTipo" prefHeight="25.0" prefWidth="168.0" />
+                                    <Label alignment="BOTTOM_LEFT" text="Nome" />
+                                    <TextField fx:id="txtNome" />
                                  </children>
                               </VBox>
-                              <HBox prefHeight="44.0" prefWidth="440.0">
+                              <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
                                  <children>
-                                    <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
-                                       <children>
-                                          <Label text="Preço Unitário" />
-                                          <TextField fx:id="txtPreco" prefHeight="25.0" prefWidth="455.0" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </HBox>
-                              <VBox prefHeight="243.0" prefWidth="290.0" spacing="10.0">
-                                 <children>
-                                    <Label text="Descrição" />
-                                    <TextArea fx:id="txtDescricao" prefHeight="55.0" prefWidth="590.0" />
+                                    <Label text="Sobrenome" />
+                                    <TextField fx:id="txtSobrenome" prefHeight="25.0" prefWidth="455.0" />
                                  </children>
                               </VBox>
                            </children>
-                        </VBox>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="64.0" prefHeight="44.0" prefWidth="440.0" spacing="10.0">
+                           <children>
+                              <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
+                                 <children>
+                                    <Label text="CPF" />
+                                    <TextField fx:id="txtCpf" prefHeight="25.0" prefWidth="455.0" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
+                                 <children>
+                                    <Label text="Telefone" />
+                                    <TextField fx:id="txtTelefone" prefHeight="25.0" prefWidth="455.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                      </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
+                     <VBox.margin>
+                        <Insets right="10.0" />
+                     </VBox.margin>
                   </VBox>
                </children>
-            </HBox>
+            </VBox>
          </children>
       </AnchorPane>
    </center>
    <bottom>
-      <HBox alignment="BOTTOM_RIGHT" prefHeight="5.0" prefWidth="610.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <HBox alignment="BOTTOM_RIGHT" prefHeight="25.0" prefWidth="382.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnCadastrar" mnemonicParsing="false" onAction="#btnCadastrarAction" text="Cadastrar">
                <HBox.margin>

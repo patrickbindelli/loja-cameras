@@ -19,15 +19,16 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.*;
 
 
-public class NovaVendaController extends Controller implements Initializable {
+public class NovaVendaController extends TopMenuController implements Initializable {
     private static final Logger logger = LoggerFactory.getLogger(MainTeste.class);
     private final Validator validator = new Validator();
-    private final Map<Long, ProdutoVenda> mapVendas = new HashMap<>();
-
+    private final Map<Long, ProdutoOperacao> mapVendas = new HashMap<>();
+    private final NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
     @FXML
     private Button btnAdicionar, btnCancelar, btnClose, btnFinalizar, btnRemover, btnBuscar;
 
@@ -35,31 +36,31 @@ public class NovaVendaController extends Controller implements Initializable {
     private TextField txtId, txtPreco, txtQuantidade, txtTotal;
 
     @FXML
-    private TableView<ProdutoVenda> tbNovaVenda;
+    private TableView<ProdutoOperacao> tbNovaVenda;
 
     @FXML
-    private TableColumn<ProdutoVenda, String> colCodgo;
+    private TableColumn<ProdutoOperacao, String> colCodgo;
 
     @FXML
-    private TableColumn<ProdutoVenda, String> colDesc;
+    private TableColumn<ProdutoOperacao, String> colDesc;
 
     @FXML
-    private TableColumn<ProdutoVenda, String> colMarca;
+    private TableColumn<ProdutoOperacao, String> colMarca;
 
     @FXML
-    private TableColumn<ProdutoVenda, String> colNome;
+    private TableColumn<ProdutoOperacao, String> colNome;
 
     @FXML
-    private TableColumn<ProdutoVenda, Integer> colQtd;
+    private TableColumn<ProdutoOperacao, Integer> colQtd;
 
     @FXML
-    private TableColumn<ProdutoVenda, String> colTipo;
+    private TableColumn<ProdutoOperacao, String> colTipo;
 
     @FXML
-    private TableColumn<ProdutoVenda, Double> colTotal;
+    private TableColumn<ProdutoOperacao, String> colTotal;
 
     @FXML
-    private TableColumn<ProdutoVenda, String> colValor;
+    private TableColumn<ProdutoOperacao, String> colValor;
 
 
     @Override
@@ -70,8 +71,8 @@ public class NovaVendaController extends Controller implements Initializable {
         colQtd.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
         colTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCamera().getTipo().getNome()));
         colMarca.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCamera().getMarca().toString()));
-        colValor.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getCamera().getPreco())));
-        colTotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
+        colValor.setCellValueFactory(cellData -> new SimpleStringProperty(numberFormat.format(cellData.getValue().getCamera().getPreco())));
+        colTotal.setCellValueFactory(cellData -> new SimpleStringProperty(numberFormat.format(cellData.getValue().getSubtotal())));
 
         validator.createCheck()
                 .dependsOn("id", txtId.textProperty())
@@ -106,17 +107,18 @@ public class NovaVendaController extends Controller implements Initializable {
         if(!txtId.getText().isEmpty()){
             try {
                 Camera camera = new CameraDao().getById(Long.parseLong(txtId.getText()));
-                ProdutoVenda produtoVenda = new ProdutoVenda();
+                ProdutoOperacao produtoOperacao = new ProdutoOperacao();
 
-                produtoVenda.setCamera(camera);
-                produtoVenda.setQuantidade(Integer.valueOf(txtQuantidade.getText()));
+                produtoOperacao.setCamera(camera);
+                produtoOperacao.setQuantidade(Integer.valueOf(txtQuantidade.getText()));
+                produtoOperacao.setValorUnitario(camera.getPreco());
 
-                mapVendas.put(produtoVenda.getCamera().getId(), produtoVenda);
+                mapVendas.put(produtoOperacao.getCamera().getId(), produtoOperacao);
 
                 carregarTbNovaVenda();
                 calculaTotal();
 
-                tbNovaVenda.getSelectionModel().select(produtoVenda);
+                tbNovaVenda.getSelectionModel().select(produtoOperacao);
                 tbNovaVendaAction();
 
             } catch (SQLException e) {
@@ -131,33 +133,37 @@ public class NovaVendaController extends Controller implements Initializable {
     }
 
     @FXML
-    private void btnFinalizarAction(ActionEvent event) {
+    private void btnFinalizarAction(ActionEvent event) throws IOException {
         if (!mapVendas.isEmpty()) {
-            try {
+            Long idCliente = ClientesPopUpController.display();
+            if(idCliente != null) {
+                try {
+                    Venda venda = new Venda();
+                    venda.setCameras(mapVendas);
+                    venda.setCliente(new ClienteDao().getById(idCliente));
+                    venda.setDataVenda(LocalDate.now());
 
-                Venda venda = new Venda();
-                venda.setCameras(mapVendas);
-                venda.setCliente(new ClienteDao().getById(12));
-                venda.setDataVenda(LocalDate.now());
-                System.out.println(venda);
+                    new VendaDao().create(venda);
 
-                new VendaDao().create(venda);
+                    ButtonType foo = new ButtonType("Verificar Venda", ButtonBar.ButtonData.YES);
+                    ButtonType bar = new ButtonType("Nova Venda", ButtonBar.ButtonData.OK_DONE);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION,"",foo, bar);
+                    alert.setTitle("Venda Finalizada");
+                    alert.setHeaderText("Informações da venda");
+                    alert.setContentText(venda.toString());
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Venda Finalizada");
-                alert.setHeaderText("Informações da venda");
-                alert.setContentText(venda.toString());
-                alert.showAndWait();
-
-
-                mapVendas.clear();
-                carregarTbNovaVenda();
-                calculaTotal();
-
-                VendasController.setPreId(venda.getId());
-                switchToVendas(event);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if(!result.isPresent() || result.get() != ButtonType.YES) {
+                        mapVendas.clear();
+                        carregarTbNovaVenda();
+                        calculaTotal();
+                    }else {
+                        VendasController.setPreId(venda.getId());
+                        switchToVendas(event);;
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -170,18 +176,18 @@ public class NovaVendaController extends Controller implements Initializable {
 
     private void calculaTotal(){
         Double total = 0d;
-        for(ProdutoVenda produtoVenda : mapVendas.values()){
-            total += produtoVenda.getSubtotal();
+        for(ProdutoOperacao produtoOperacao : mapVendas.values()){
+            total += produtoOperacao.getSubtotal();
         }
 
-        txtTotal.setText(total.toString());
+        txtTotal.setText(numberFormat.format(total));
     }
 
     @FXML
     private void btnRemoverAction(){
         if(tbNovaVenda.getSelectionModel().getSelectedItem() != null){
-            ProdutoVenda produtoVenda = tbNovaVenda.getSelectionModel().getSelectedItem();
-            mapVendas.remove(produtoVenda.getCamera().getId());
+            ProdutoOperacao produtoOperacao = tbNovaVenda.getSelectionModel().getSelectedItem();
+            mapVendas.remove(produtoOperacao.getCamera().getId());
 
             calculaTotal();
             carregarTbNovaVenda();
@@ -208,11 +214,11 @@ public class NovaVendaController extends Controller implements Initializable {
 
     @FXML
     private void tbNovaVendaAction(){
-        ProdutoVenda produtoVenda = tbNovaVenda.getSelectionModel().getSelectedItem();
-        if(produtoVenda != null){
-            txtId.setText(produtoVenda.getCamera().getId().toString());
-            txtQuantidade.setText(produtoVenda.getQuantidade().toString());
-            txtPreco.setText(String.valueOf(produtoVenda.getCamera().getPreco()));
+        ProdutoOperacao produtoOperacao = tbNovaVenda.getSelectionModel().getSelectedItem();
+        if(produtoOperacao != null){
+            txtId.setText(produtoOperacao.getCamera().getId().toString());
+            txtQuantidade.setText(produtoOperacao.getQuantidade().toString());
+            txtPreco.setText(String.valueOf(produtoOperacao.getCamera().getPreco()));
         }
     }
 
@@ -222,7 +228,7 @@ public class NovaVendaController extends Controller implements Initializable {
         Long searchedId = EstoquePopUpController.display();
         if(searchedId != null){
             txtId.setText(searchedId.toString());
-            btnAdicionarAction();
+            if(!txtQuantidade.getText().isEmpty()) btnAdicionarAction();
         }
     }
 }

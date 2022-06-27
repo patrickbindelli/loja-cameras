@@ -7,7 +7,7 @@ import java.sql.*;
 
 public abstract class DaoPostgres {
     protected String ADDRESS = "localhost";
-    protected String DB = "FilmeVelado";
+    protected String DB = "comercio-cameras";
     protected String PORT = "5432";
     protected String USER = "postgres";
     protected String PASSWORD = "postgres";

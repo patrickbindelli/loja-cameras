@@ -4,6 +4,7 @@ import br.edu.femass.dao.CameraDao;
 import br.edu.femass.model.Camera;
 import br.edu.femass.model.Marca;
 import br.edu.femass.model.Tipo;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,11 +15,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EstoqueController extends Controller implements Initializable {
+public class EstoqueController extends TopMenuController implements Initializable {
 
+    private final NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
     @FXML
     private TableView<Camera> tbEstoque;
 
@@ -41,7 +44,7 @@ public class EstoqueController extends Controller implements Initializable {
     private TableColumn<Camera, Tipo> colTipo;
 
     @FXML
-    private TableColumn<Camera, Double> colValor;
+    private TableColumn<Camera, String> colValor;
 
     @FXML
     private TextField txtId, txtPreco, txtQuantidade;
@@ -55,7 +58,7 @@ public class EstoqueController extends Controller implements Initializable {
         colQtd.setCellValueFactory(new PropertyValueFactory<>("estoque"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
-        colValor.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        colValor.setCellValueFactory(cellData -> new SimpleStringProperty(numberFormat.format(cellData.getValue().getPreco())));
 
         carregaTabelaEstoque();
     }

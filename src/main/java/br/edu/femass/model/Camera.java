@@ -11,4 +11,9 @@ public class Camera {
     private int estoque;
     private Tipo tipo;
     private Marca marca;
+
+    @Override
+    public String toString() {
+        return nome + " - " + tipo.getNome() + " - " + marca;
+    }
 }

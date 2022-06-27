@@ -9,10 +9,10 @@ module br.edu.femass {
     requires org.postgresql.jdbc;
     requires java.sql;
     requires net.synedra.validatorfx;
-    requires com.dlsc.formsfx;
 
     opens br.edu.femass to javafx.fxml;
     opens br.edu.femass.controller to javafx.fxml;
     opens br.edu.femass.model to javafx.base;
     exports br.edu.femass;
+    opens br.edu.femass.controller.Utils to javafx.fxml;
 }

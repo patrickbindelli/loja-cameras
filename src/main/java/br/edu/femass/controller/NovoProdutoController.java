@@ -1,5 +1,7 @@
 package br.edu.femass.controller;
 
+import br.edu.femass.controller.Utils.ControllerCommons;
+import br.edu.femass.controller.Utils.ScenesEnum;
 import br.edu.femass.dao.CameraDao;
 import br.edu.femass.dao.MarcaDao;
 import br.edu.femass.model.Camera;
@@ -46,7 +48,7 @@ public class NovoProdutoController implements Initializable {
 
     public static void display() throws IOException {
         Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(NovoProdutoController.class.getResource(Scenes.NOVO_PRODUTO.getScene()));
+        FXMLLoader fxmlLoader = new FXMLLoader(NovoProdutoController.class.getResource(ScenesEnum.NOVO_PRODUTO.getScene()));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Novo produto");
         stage.setScene(scene);
@@ -59,7 +61,7 @@ public class NovoProdutoController implements Initializable {
 
     @FXML
     private void btnCancelarAction(ActionEvent event){
-        Utils.closeScene(event);
+        ControllerCommons.closeScene(event);
     }
 
     @FXML
@@ -75,7 +77,7 @@ public class NovoProdutoController implements Initializable {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Utils.closeScene(event);
+        ControllerCommons.closeScene(event);
     }
 
     @FXML

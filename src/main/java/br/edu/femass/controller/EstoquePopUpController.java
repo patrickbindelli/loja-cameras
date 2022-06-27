@@ -1,17 +1,18 @@
 package br.edu.femass.controller;
 
+import br.edu.femass.controller.Utils.ControllerCommons;
+import br.edu.femass.controller.Utils.ScenesEnum;
 import br.edu.femass.dao.CameraDao;
 import br.edu.femass.model.Camera;
 import br.edu.femass.model.Marca;
 import br.edu.femass.model.Tipo;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,18 +53,20 @@ public class EstoquePopUpController implements Initializable {
     private TableColumn<Camera, Tipo> colTipo;
 
     @FXML
-    private TableColumn<Camera, Double> colValor;
+    private TableColumn<Camera, String> colValor;
 
     private static Long idToSearch;
+    private static Long idToReturn;
     private static Stage stage;
     private final Map<Long, Camera> longCameraMap = new HashMap<>();
+    private final NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
 
     public static void setIdToSearch(Long idToSearch) {
         EstoquePopUpController.idToSearch = idToSearch;
     }
 
     public static Long display() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(EstoquePopUpController.class.getResource(Scenes.ESTOQUE_POPUP.getScene()));
+        FXMLLoader fxmlLoader = new FXMLLoader(EstoquePopUpController.class.getResource(ScenesEnum.ESTOQUE_POPUP.getScene()));
         Scene scene = new Scene(fxmlLoader.load());
         stage = new Stage();
         stage.setTitle("Selecionar Produto");
@@ -73,7 +77,7 @@ public class EstoquePopUpController implements Initializable {
         stage.requestFocus();
         stage.showAndWait();
 
-        return idToSearch;
+        return idToReturn;
     }
 
     @Override
@@ -85,14 +89,16 @@ public class EstoquePopUpController implements Initializable {
         colQtd.setCellValueFactory(new PropertyValueFactory<>("estoque"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         colMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
-        colValor.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        colValor.setCellValueFactory(cellData -> new SimpleStringProperty(numberFormat.format(cellData.getValue().getPreco())));
 
         carregaTabelaEstoque();
 
-        System.out.println(idToSearch);
-        if(idToSearch != null){
-            tbEstoque.getSelectionModel().select(longCameraMap.get(idToSearch));
-            tbEstoque.scrollTo(longCameraMap.get(idToSearch));
+        Long intenalIdToSearch = idToSearch;
+        idToSearch = null;
+
+        if(intenalIdToSearch != null){
+            tbEstoque.getSelectionModel().select(longCameraMap.get(intenalIdToSearch));
+            tbEstoque.scrollTo(longCameraMap.get(intenalIdToSearch));
         }
     }
 
@@ -110,21 +116,21 @@ public class EstoquePopUpController implements Initializable {
     @FXML
     void btnAdicionarAction(ActionEvent event) {
         if(tbEstoque.getSelectionModel().getSelectedItem() != null){
-            idToSearch = tbEstoque.getSelectionModel().getSelectedItem().getId();
+            idToReturn = tbEstoque.getSelectionModel().getSelectedItem().getId();
         }
-        Utils.closeScene(event);
+        ControllerCommons.closeScene(event);
     }
 
     @FXML
     void btnCancelarAction(ActionEvent event) {
-        Utils.closeScene(event);
+        ControllerCommons.closeScene(event);
     }
 
     @FXML
     void tbEstoqueOnClick(MouseEvent event) {
         if(tbEstoque.getSelectionModel().getSelectedItem() != null) {
             Camera camera = tbEstoque.getSelectionModel().getSelectedItem();
-            idToSearch = camera.getId();
+            idToReturn = camera.getId();
         }
 
         if(event.getButton().equals(MouseButton.PRIMARY)){

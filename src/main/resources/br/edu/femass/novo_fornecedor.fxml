@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="237.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.femass.controller.NovoClienteController">
+<BorderPane prefHeight="237.0" prefWidth="365.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.femass.controller.NovoFornecedorController">
    <center>
       <AnchorPane prefHeight="239.0" prefWidth="392.0">
          <children>
             <VBox prefHeight="136.0" prefWidth="353.0" spacing="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <Label text="Cadastro de Cliente">
+                  <Label text="Cadastro de Fornecedor">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -33,20 +33,14 @@
                               </VBox>
                               <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
                                  <children>
-                                    <Label text="Sobrenome" />
-                                    <TextField fx:id="txtSobrenome" prefHeight="25.0" prefWidth="455.0" />
+                                    <Label text="CNPJ" />
+                                    <TextField fx:id="txtCnpj" prefHeight="25.0" prefWidth="455.0" />
                                  </children>
                               </VBox>
                            </children>
                         </HBox>
                         <HBox layoutX="10.0" layoutY="64.0" prefHeight="44.0" prefWidth="440.0" spacing="10.0">
                            <children>
-                              <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
-                                 <children>
-                                    <Label text="CPF" />
-                                    <TextField fx:id="txtCpf" prefHeight="25.0" prefWidth="455.0" />
-                                 </children>
-                              </VBox>
                               <VBox prefHeight="44.0" prefWidth="168.0" spacing="2.0">
                                  <children>
                                     <Label text="Telefone" />

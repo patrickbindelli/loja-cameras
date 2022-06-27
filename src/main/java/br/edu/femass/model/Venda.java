@@ -1,13 +1,11 @@
 package br.edu.femass.model;
 
-import br.edu.femass.dao.VendaDao;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
+import java.text.ChoiceFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 @Data
 public class Venda {
@@ -15,29 +13,39 @@ public class Venda {
     private LocalDate dataVenda;
     private int quantidade;
     private double preco;
-    private Map<Long, ProdutoVenda> cameras = new HashMap<>();
+    private Map<Long, ProdutoOperacao> cameras = new HashMap<>();
     private Cliente cliente;
 
-    public void addProdutoVenda(ProdutoVenda produtoVenda){
-        cameras.put(produtoVenda.getCamera().getId(), produtoVenda);
-        quantidade += produtoVenda.getQuantidade();
-        preco += produtoVenda.getSubtotal();
+    public void addProdutoVenda(ProdutoOperacao produtoOperacao){
+        cameras.put(produtoOperacao.getCamera().getId(), produtoOperacao);
+        quantidade += produtoOperacao.getQuantidade();
+        preco += produtoOperacao.getSubtotal();
     }
 
-    public void setCameras(Map<Long, ProdutoVenda> cameras) {
+    public void setCameras(Map<Long, ProdutoOperacao> cameras) {
         this.cameras = cameras;
-        for(ProdutoVenda produtoVenda : cameras.values()){
-            quantidade += produtoVenda.getQuantidade();
-            preco += produtoVenda.getSubtotal();
+        for(ProdutoOperacao produtoOperacao : cameras.values()){
+            quantidade += produtoOperacao.getQuantidade();
+            preco += produtoOperacao.getSubtotal();
         }
     }
 
     @Override
     public String toString() {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+        StringBuilder camerasVenda = new StringBuilder();
+        for(ProdutoOperacao produtoOperacao : cameras.values()){
+            camerasVenda.append(produtoOperacao.getCamera()).append(" - ").append(numberFormat.format(produtoOperacao.getValorUnitario()));
+            camerasVenda.append(" - ").append(numberFormat.format(produtoOperacao.getSubtotal()));
+            camerasVenda.append(" - ").append(produtoOperacao.getQuantidade()).append("un\n");
+        }
+
         return "Venda " + id +
                 "\nData: " + dataVenda +
                 "\nQuantidade: " + quantidade +
-                "\nTotal: " + preco +
-                "\nCliente: " + cliente.getNome() + " " + cliente.getSobrenome();
+                "\nTotal: " + numberFormat.format(preco) +
+                "\nCliente: " + cliente.getNomeCompleto() +
+                "\n\n[Nome - Tipo - Marca - ValorUn - Subtotal - Quantidade]\n" + camerasVenda +
+                "Total: " + numberFormat.format(preco);
     }
 }

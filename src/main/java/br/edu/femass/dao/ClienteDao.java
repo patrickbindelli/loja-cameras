@@ -15,11 +15,12 @@ public class ClienteDao extends DaoPostgres implements DAO<Cliente>{
     private static final Logger logger = LoggerFactory.getLogger(MainTeste.class);
     @Override
     public void create(Cliente value) throws Exception {
-        String sql = "INSERT INTO cliente (nome, sobrenome, cpf) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO cliente (nome, sobrenome, cpf, telefone) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = getPreparedStatement(sql, true);
         ps.setString(1, value.getNome());
         ps.setString(2, value.getSobrenome());
         ps.setString(3, value.getCpf());
+        ps.setString(4, value.getTelefone());
         ps.executeUpdate();
         logger.debug(String.valueOf(ps));
 
@@ -40,6 +41,7 @@ public class ClienteDao extends DaoPostgres implements DAO<Cliente>{
             cliente.setNome(rs.getString("nome"));
             cliente.setSobrenome(rs.getString("sobrenome"));
             cliente.setCpf(rs.getString("cpf"));
+            cliente.setTelefone(rs.getString("telefone"));
             cliente.setId(rs.getLong("id"));
             clientes.add(cliente);
         }
@@ -59,17 +61,19 @@ public class ClienteDao extends DaoPostgres implements DAO<Cliente>{
         cliente.setNome(rs.getString("nome"));
         cliente.setSobrenome(rs.getString("sobrenome"));
         cliente.setCpf(rs.getString("cpf"));
+        cliente.setTelefone(rs.getString("telefone"));
         return cliente;
     }
 
     @Override
     public void update(Cliente value) throws Exception {
-        String sql = "UPDATE cliente SET nome = ?, sobrenome = ?, cpf = ? WHERE id = ?";
+        String sql = "UPDATE cliente SET nome = ?, sobrenome = ?, cpf = ?, telefone = ? WHERE id = ?";
         PreparedStatement ps = getPreparedStatement(sql);
         ps.setString(1, value.getNome());
         ps.setString(2, value.getSobrenome());
         ps.setString(3, value.getCpf());
-        ps.setLong(4, value.getId());
+        ps.setString(4, value.getTelefone());
+        ps.setLong(5, value.getId());
         ps.executeUpdate();
     }
 
