@@ -1,7 +1,6 @@
 package br.edu.femass.dao;
 
 import br.edu.femass.model.*;
-import br.edu.femass.testes.MainTeste;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CameraDao extends DaoPostgres implements DAO<Camera> {
-    private static final Logger logger = LoggerFactory.getLogger(MainTeste.class);
+    private static final Logger logger = LoggerFactory.getLogger(CameraDao.class);
 
     private static final Map<Long, Marca> mapMarcas = new HashMap<>();
 

@@ -1,7 +1,6 @@
 package br.edu.femass.dao;
 
 import br.edu.femass.model.Cliente;
-import br.edu.femass.testes.MainTeste;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDao extends DaoPostgres implements DAO<Cliente>{
-    private static final Logger logger = LoggerFactory.getLogger(MainTeste.class);
+    private static final Logger logger = LoggerFactory.getLogger(ClienteDao.class);
     @Override
     public void create(Cliente value) throws Exception {
         String sql = "INSERT INTO cliente (nome, sobrenome, cpf, telefone) VALUES (?, ?, ?, ?)";

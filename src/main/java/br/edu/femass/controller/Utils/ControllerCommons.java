@@ -18,18 +18,14 @@ public class ControllerCommons {
         Parent root = FXMLLoader.load(Objects.requireNonNull(ControllerCommons.class.getResource(scenesEnum.getScene())));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-        double prevWidth = stage.getWidth();
-        double prevHeight = stage.getHeight();
 
         Scene scene = new Scene(root);
         scene.getStylesheets().add(Objects.requireNonNull(ControllerCommons.class.getResource("/br/edu/femass/style.css")).toExternalForm());
 
-        stage.setHeight(prevHeight);
-        stage.setWidth(prevWidth);
-
         String sceneTitle = scenesEnum.toString().charAt(0) + scenesEnum.toString().substring(1).toLowerCase();
         stage.setTitle(sceneTitle.replaceAll("_", " "));
         stage.setScene(scene);
+
         stage.show();
     }
 

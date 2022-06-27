@@ -76,7 +76,7 @@
          <children>
             <AnchorPane prefHeight="772.0" prefWidth="1115.0">
                <children>
-                  <TableView fx:id="tbCompras" onMouseClicked="#tbComprasOnClick" prefHeight="675.0" prefWidth="1074.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tbCompras" onMouseClicked="#tbComprasOnClick" prefHeight="593.0" prefWidth="1074.0">
                     <columns>
                       <TableColumn fx:id="colCodgo" editable="false" prefWidth="90.0" resizable="false" text="Codigo" />
                       <TableColumn fx:id="colData" editable="false" prefWidth="160.0" resizable="false" text="Data" />

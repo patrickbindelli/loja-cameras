@@ -20,6 +20,7 @@ public class Application extends javafx.application.Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("Nova venda");
         stage.setScene(scene);
+
         stage.show();
     }
 }

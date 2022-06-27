@@ -4,7 +4,6 @@ import br.edu.femass.dao.CameraDao;
 import br.edu.femass.dao.ClienteDao;
 import br.edu.femass.dao.VendaDao;
 import br.edu.femass.model.*;
-import br.edu.femass.testes.MainTeste;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -25,7 +24,7 @@ import java.util.*;
 
 
 public class NovaVendaController extends TopMenuController implements Initializable {
-    private static final Logger logger = LoggerFactory.getLogger(MainTeste.class);
+    private static final Logger logger = LoggerFactory.getLogger(NovaVendaController.class);
     private final Validator validator = new Validator();
     private final Map<Long, ProdutoOperacao> mapVendas = new HashMap<>();
     private final NumberFormat numberFormat = NumberFormat.getCurrencyInstance();

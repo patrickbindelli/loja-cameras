@@ -1,8 +1,6 @@
 package br.edu.femass.dao;
 
-import br.edu.femass.model.Cliente;
 import br.edu.femass.model.Fornecedor;
-import br.edu.femass.testes.MainTeste;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +12,7 @@ import java.util.List;
 
 public class FornecedorDao extends DaoPostgres implements DAO<Fornecedor> {
 
-    private static final Logger logger = LoggerFactory.getLogger(MainTeste.class);
+    private static final Logger logger = LoggerFactory.getLogger(FornecedorDao.class);
     @Override
     public void create(Fornecedor value) throws Exception {
         String sql = "INSERT INTO fornecedor (nome, cnpj, telefone) VALUES (?, ?, ?)";

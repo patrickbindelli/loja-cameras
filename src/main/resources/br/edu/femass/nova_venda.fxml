@@ -125,7 +125,7 @@
          <children>
             <AnchorPane prefHeight="772.0" prefWidth="1115.0">
                <children>
-                  <TableView fx:id="tbNovaVenda" onMouseClicked="#tbNovaVendaAction" prefHeight="675.0" prefWidth="1074.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tbNovaVenda" onMouseClicked="#tbNovaVendaAction" prefHeight="595.0" prefWidth="1074.0">
                     <columns>
                       <TableColumn fx:id="colCodgo" editable="false" prefWidth="90.0" resizable="false" text="Codigo" />
                       <TableColumn fx:id="colNome" editable="false" prefWidth="160.0" resizable="false" text="Nome" />
@@ -137,7 +137,7 @@
                         <TableColumn fx:id="colTotal" editable="false" prefWidth="150.0" resizable="false" text="Subtotal" />
                     </columns>
                   </TableView>
-                  <HBox alignment="CENTER_LEFT" layoutY="700.0" prefHeight="54.0" prefWidth="357.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="402.0" spacing="10.0" AnchorPane.bottomAnchor="10.0">
                      <children>
                         <Button fx:id="btnFinalizar" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#btnFinalizarAction" prefWidth="110.0" text="Finalizar Venda">
                            <graphic>
@@ -156,7 +156,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" layoutX="850.0" layoutY="676.0" prefHeight="15.0" prefWidth="224.0" spacing="10.0" AnchorPane.bottomAnchor="10.0">
+                  <HBox alignment="CENTER_RIGHT" layoutX="526.0" layoutY="599.0" prefHeight="0.0" prefWidth="547.0" spacing="10.0" AnchorPane.bottomAnchor="11.0">
                      <children>
                         <Label text="TOTAL">
                            <font>

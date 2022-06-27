@@ -7,7 +7,6 @@ import br.edu.femass.dao.MarcaDao;
 import br.edu.femass.model.Camera;
 import br.edu.femass.model.Marca;
 import br.edu.femass.model.Tipo;
-import br.edu.femass.testes.MainTeste;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,7 +28,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class NovoProdutoController implements Initializable {
-    private static final Logger logger = LoggerFactory.getLogger(MainTeste.class);
+    private static final Logger logger = LoggerFactory.getLogger(NovoProdutoController.class);
 
     private final Validator validator = new Validator();
 
